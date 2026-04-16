@@ -2,10 +2,15 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22شات%22,%22short_name%22:%22شات%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%220a0a14%22,%22theme_color%22:%226c63ff%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%236c63ff'/><stop offset='100%25' stop-color='%23ff6584'/></linearGradient></defs><rect width='512' height='512' rx='120' fill='url(%23g)'/><circle cx='256' cy='230' r='145' fill='white'/><circle cx='205' cy='222' r='24' fill='%236c63ff'/><circle cx='256' cy='222' r='24' fill='%236c63ff'/><circle cx='307' cy='222' r='24' fill='%236c63ff'/><polygon points='195,355 260,378 242,308' fill='white'/></svg>%22,%22sizes%22:%22512x512%22,%22type%22:%22image/svg+xml%22}]}"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%236c63ff'/><stop offset='100%25' stop-color='%23ff6584'/></linearGradient></defs><rect width='512' height='512' rx='120' fill='url(%23g)'/><circle cx='256' cy='230' r='145' fill='white'/><circle cx='205' cy='222' r='24' fill='%236c63ff'/><circle cx='256' cy='222' r='24' fill='%236c63ff'/><circle cx='307' cy='222' r='24' fill='%236c63ff'/><polygon points='195,355 260,378 242,308' fill='white'/></svg>"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="شات"/>
+<meta name="theme-color" content="#6c63ff"/>
 <title>شات</title>
-<link rel="manifest" href="/manifest.json"/>
-<link rel="apple-touch-icon" href="/icon.svg"/>
+
+
   %22name%22: %22شات%22,
   %22short_name%22: %22شات%22,
   %22start_url%22: %22/%22,
@@ -14,15 +19,15 @@
   %22theme_color%22: %226c63ff%22,
   %22icons%22: [{%22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236c63ff'/%3E%3Cstop offset='100%25' stop-color='%23ff6584'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='120' fill='url(%23g)'/%3E%3Ccircle cx='256' cy='230' r='140' fill='white'/%3E%3Ccircle cx='210' cy='220' r='22' fill='%236c63ff'/%3E%3Ccircle cx='256' cy='220' r='22' fill='%236c63ff'/%3E%3Ccircle cx='302' cy='220' r='22' fill='%236c63ff'/%3E%3Cpolygon points='200,350 256,370 240,310' fill='white'/%3E%3C/svg%3E%22,%22sizes%22:%22512x512%22,%22type%22:%22image/svg+xml%22}]
 }"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="شات"/>
-<meta name="theme-color" content="#6c63ff"/>
+
+
+
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet"/>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   :root{--bg:#0a0a14;--sidebar:#0f0f1e;--card:#151525;--border:rgba(255,255,255,0.07);--accent:#6c63ff;--accent2:#ff6584;--text:#e8e8f0;--muted:#555570;--msg-me:linear-gradient(135deg,#6c63ff,#a78bfa);--msg-them:#1a1a2e}
-  body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;overflow:hidden}
+  html,body{width:100%;max-width:100%;overflow-x:hidden}body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;overflow:hidden}
   #auth-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:100;background-image:radial-gradient(ellipse at 30% 30%,rgba(108,99,255,0.15) 0,transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(255,101,132,0.1) 0,transparent 60%)}
   .auth-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px 36px;width:360px;max-width:92vw;box-shadow:0 24px 80px rgba(0,0,0,0.5)}
   .auth-logo{text-align:center;margin-bottom:28px}
