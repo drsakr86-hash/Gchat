@@ -1,46 +1,40 @@
 name: Build Gchat APK
 
 on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:   # تقدر تشغله يدوياً من GitHub
+  workflow_dispatch:
 
 jobs:
-  build-apk:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Bubblewrap CLI
+      - name: Install Bubblewrap
         run: npm install -g @bubblewrap/cli
 
-      - name: Init Bubblewrap project
+      - name: Init Bubblewrap
         run: |
-          mkdir apk-build && cd apk-build
+          mkdir apk && cd apk
           bubblewrap init \
-            --manifest "https://drsakr86-hash.github.io/Gchat/manifest.json" \
-            --directory .
+            --manifest https://drsakr86-hash.github.io/Gchat/manifest.json \
+            --jdk=skip \
+            --accept-defaults
 
       - name: Build APK
-        working-directory: apk-build
+        working-directory: apk
         run: bubblewrap build --skipPwaValidation
 
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: Gchat-APK
-          path: apk-build/*.apk
-          retention-days: 30
+          path: apk/*.apk
