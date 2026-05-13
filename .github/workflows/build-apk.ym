@@ -1,40 +1,65 @@
 name: Build Gchat APK
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build:
+  build-apk:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      - uses: actions/setup-java@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Bubblewrap
+      - name: Install Bubblewrap CLI
         run: npm install -g @bubblewrap/cli
 
+      - name: Setup Android SDK (non-interactive)
+        run: |
+          export ANDROID_HOME=$HOME/android-sdk
+          mkdir -p $ANDROID_HOME/cmdline-tools
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+          unzip -q commandlinetools-linux-*.zip -d $ANDROID_HOME/cmdline-tools
+          mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+          echo "y" | sdkmanager --licenses > /dev/null
+          sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3" > /dev/null
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
+          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
+
       - name: Init Bubblewrap project
-  run: bubblewrap init --jdk install
+        run: |
           mkdir apk-build && cd apk-build
-          echo "n" | bubblewrap init \
-            --manifest https://drsakr86-hash.github.io/Gchat/manifest.json
+          export JAVA_HOME=$JAVA_HOME_17_X64
+          echo "y" | bubblewrap init \
+            --manifest "https://drsakr86-hash.github.io/Gchat/manifest.json" \
+            --directory . \
+            --jdk skip
 
       - name: Build APK
         working-directory: apk-build
-        run: echo "n" | bubblewrap build --skipPwaValidation
+        run: bubblewrap build --skipPwaValidation
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
         with:
           name: Gchat-APK
+          path: apk-build/*.apk
+          retention-days: 30          name: Gchat-APK
           path: apk-build/*.apk      - uses: actions/upload-artifact@v4
         with:
           name: Gchat-APK
