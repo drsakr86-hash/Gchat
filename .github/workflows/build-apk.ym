@@ -13,28 +13,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      # هذه هي الخطوة السحرية التي ستحل محل كل تعقيدات Bubblewrap
+      - name: Convert PWA to APK
+        uses: sharadcodes/pwa-to-apk-action@v1
         with:
-          node-version: '18'
+          manifest_url: "https://drsakr86-hash.github.io/Gchat/manifest.json"
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Install Bubblewrap CLI
-        run: npm install -g @bubblewrap/cli
-
-      - name: Setup Android SDK (non-interactive)
-        run: |
-          export ANDROID_HOME=$HOME/android-sdk
-          mkdir -p $ANDROID_HOME/cmdline-tools
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
-          unzip -q commandlinetools-linux-*.zip -d $ANDROID_HOME/cmdline-tools
-          mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+          name: Gchat-APK
+          # الـ action السابق يضع الـ APK في هذا المسار
+          path: ./android-app-builder/app-release-unsigned.apk
+          retention-days: 30          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
           echo "y" | sdkmanager --licenses > /dev/null
           sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3" > /dev/null
           echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
