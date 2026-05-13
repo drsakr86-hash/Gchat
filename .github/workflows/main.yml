@@ -3,7 +3,7 @@ name: Build Gchat APK
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:   # تقدر تشغله يدوياً من GitHub
+  workflow_dispatch:
 
 jobs:
   build-apk:
@@ -32,7 +32,8 @@ jobs:
           mkdir apk-build && cd apk-build
           bubblewrap init \
             --manifest "https://drsakr86-hash.github.io/Gchat/manifest.json" \
-            --directory .
+            --directory . \
+            --jdk skip
 
       - name: Build APK
         working-directory: apk-build
