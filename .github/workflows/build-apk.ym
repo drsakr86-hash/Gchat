@@ -22,8 +22,8 @@ jobs:
       - name: Install Bubblewrap
         run: npm install -g @bubblewrap/cli
 
-      - name: Init Bubblewrap
-        run: |
+      - name: Init Bubblewrap project
+  run: bubblewrap init --jdk install
           mkdir apk-build && cd apk-build
           echo "n" | bubblewrap init \
             --manifest https://drsakr86-hash.github.io/Gchat/manifest.json
